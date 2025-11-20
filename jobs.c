@@ -18,7 +18,7 @@
 #include "proctools/format.h"
 #include "proctools/functions.h"
 #include "proctools/logger.h"
-#include "boost/bind.hpp"
+#include <boost/bind/bind.hpp>
 #include <boost/format.hpp>
 #include <string>
 #include <functional>
@@ -39,6 +39,7 @@ namespace vdr_burn
 {
 	using namespace std;
 	using boost::bind;
+	using namespace boost::placeholders;
 	using proctools::format;
 	using proctools::convert;
 	using proctools::logger;
@@ -104,7 +105,7 @@ namespace vdr_burn
 		track_filter audioTracks( m_tracks, track_info::streamtype_audio, track_predicate::used );
 		track_filter::iterator it =
 				find_if(audioTracks.begin(), audioTracks.end(),
-						bind( equal_to<int>(), bind( &track_info::cid, _1 ), cid ));
+						boost::bind( std::equal_to<int>(), boost::bind( &track_info::cid, _1 ), cid ));
 		if (it != audioTracks.end())
 			it->filename = path;
 	}
@@ -388,9 +389,9 @@ namespace vdr_burn
 	recording_list::iterator job::get_by_filename(const string& fileName)
 	{
 		return find_if(m_recordings.begin(), m_recordings.end(),
-					   bind(
-						   equal_to<string>(),
-						   bind( &recording::get_filename, _1 ),
+					   boost::bind(
+						   std::equal_to<string>(),
+						   boost::bind( &recording::get_filename, _1 ),
 						   fileName
 					   ));
 	}

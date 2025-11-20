@@ -23,7 +23,7 @@
 #include <sstream>
 #include <algorithm>
 #include <memory>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/format.hpp>
 #include <vdr/recording.h>
 #include <sys/stat.h>
@@ -32,6 +32,7 @@ namespace vdr_burn
 {
 	using namespace std;
 	using boost::bind;
+	using namespace boost::placeholders;
 	using proctools::shellescape;
 	using proctools::shellprocess;
 	using proctools::logger;
@@ -215,7 +216,7 @@ namespace vdr_burn
 	void chain_dvd::create_files()
 	{
 		for_each(get_recordings().begin(), get_recordings().end(),
-				 bind( &chain_dvd::create_files, this, _1 ));
+				 boost::bind( &chain_dvd::create_files, this, _1 ));
 	}
 
 	void chain_dvd::create_files(const recording& rec)
@@ -231,8 +232,8 @@ namespace vdr_burn
 		// fifos for each audio track
 		const_track_filter audioTracks( rec.get_tracks(), track_info::streamtype_audio, track_predicate::used );
 		for_each(audioTracks.begin(), audioTracks.end(),
-				 bind( &chain_dvd::make_fifo, this,
-				 	   bind( &recording::get_track_path, rec, _1 )
+				 boost::bind( &chain_dvd::make_fifo, this,
+				 	   boost::bind( &recording::get_track_path, rec, _1 )
 				));
 	}
 

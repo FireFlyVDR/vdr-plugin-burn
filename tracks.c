@@ -3,7 +3,6 @@
 #include "filter.h"
 #include "setup.h"
 #include "proctools/logger.h"
-#include "boost/bind.hpp"
 #include <algorithm>
 #include <iterator>
 #include <map>
@@ -14,6 +13,7 @@
 #include <memory>
 
 
+#include <boost/bind/bind.hpp>
 #include <boost/format.hpp>
 #include <vdr/i18n.h>
 
@@ -23,6 +23,7 @@ namespace vdr_burn
 	using namespace std;
 	using proctools::logger;
 	using boost::bind;
+	using namespace boost::placeholders;
 
 	//!--- language codes -----------------------------------------------------
 
@@ -103,7 +104,7 @@ namespace vdr_burn
 		if ( languageCodes.size() == 0 ) {
 			languageCodes.resize( language_count );
 			transform( language_code_map, language_code_map + language_count, languageCodes.begin(),
-					   bind( &alpha_pair::second, _1 ) );
+					   boost::bind( &alpha_pair::second, _1 ) );
 			languageCodes.erase( unique( languageCodes.begin(), languageCodes.end() ), languageCodes.end() );
 		}
 		return languageCodes;
@@ -162,12 +163,12 @@ namespace vdr_burn
 
 	track_info_list::const_iterator track_info_list::find_cid(int cid) const
 	{
-        return find_if( begin(), end(), bind( equal_to<int>(), bind( &track_info::cid, _1 ), cid ) );
+        return find_if( begin(), end(), boost::bind( std::equal_to<int>(), boost::bind( &track_info::cid, _1 ), cid ) );
 	}
 
 	track_info_list::iterator track_info_list::find_cid(int cid)
 	{
-        return find_if( begin(), end(), bind( equal_to<int>(), bind( &track_info::cid, _1 ), cid ) );
+        return find_if( begin(), end(), boost::bind( std::equal_to<int>(), boost::bind( &track_info::cid, _1 ), cid ) );
 	}
 
 }

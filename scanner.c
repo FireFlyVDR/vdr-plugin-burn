@@ -13,7 +13,7 @@
 #include "proctools/format.h"
 #include "proctools/functions.h"
 #include "genindex/pes.h"
-#include "boost/bind.hpp"
+#include <boost/bind/bind.hpp>
 #include <cctype>
 #include <numeric>
 #include <stdexcept>
@@ -42,6 +42,7 @@ namespace vdr_burn
     using proctools::convert;
     using proctools::sum;
     using boost::bind;
+    using namespace boost::placeholders;
 
 	// std::isdigit seems to be a macro or something here ?!?
     bool myisdigit(char ch) { return std::isdigit(ch); }
@@ -759,10 +760,10 @@ namespace vdr_burn
         scan_total_sizes(index, marks);
 
 		track_filter audioTracks( m_scanResult.get_tracks(), track_info::streamtype_audio, track_predicate::all );
-		for_each( audioTracks.begin(), audioTracks.end(), bind( &recording_scanner::scan_audio_track_size, this, _1 ) );
+		for_each( audioTracks.begin(), audioTracks.end(), boost::bind( &recording_scanner::scan_audio_track_size, this, _1 ) );
 
 		track_filter videoTracks( m_scanResult.get_tracks(), track_info::streamtype_video, track_predicate::all );
-		for_each( videoTracks.begin(), videoTracks.end(), bind( &recording_scanner::scan_video_track_size, this, _1 ) );
+		for_each( videoTracks.begin(), videoTracks.end(), boost::bind( &recording_scanner::scan_video_track_size, this, _1 ) );
     }
 
 	bool video_track_finder(const tComponent& component)
@@ -920,9 +921,9 @@ namespace vdr_burn
 		track_filter audioTracks( m_scanResult.get_tracks(), track_info::streamtype_audio, track_predicate::all );
 		size_pair audioSizes(
 				sum( audioTracks.begin(), audioTracks.end(), uint64_t( 0 ),
-						bind( &size_pair::uncut, bind( &track_info::size, _1 ) ) ),
+						boost::bind( &size_pair::uncut, boost::bind( &track_info::size, _1 ) ) ),
 				sum( audioTracks.begin(), audioTracks.end(), uint64_t( 0 ),
-						bind( &size_pair::cut, bind( &track_info::size, _1 ) ) ) );
+						boost::bind( &size_pair::cut, boost::bind( &track_info::size, _1 ) ) ) );
 
     	track.size.uncut = uint64_t( (double( m_totalSize.uncut ) * 0.995) - audioSizes.uncut );
     	track.size.cut = uint64_t( (double( m_totalSize.cut ) * 0.995) - audioSizes.cut );

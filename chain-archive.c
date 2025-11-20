@@ -8,7 +8,7 @@
 #include "burn.h"
 #include "chain-archive.h"
 #include "setup.h"
-#include "boost/bind.hpp"
+#include <boost/bind/bind.hpp>
 #include "proctools/shellescape.h"
 #include "proctools/shellprocess.h"
 #include "proctools/functions.h"
@@ -22,6 +22,7 @@ namespace vdr_burn
 
 	using namespace std;
 	using boost::bind;
+	using namespace boost::placeholders;
 	using proctools::process;
 	using proctools::shellescape;
 	using proctools::shellprocess;
@@ -59,9 +60,9 @@ namespace vdr_burn
 				accumulate(get_recordings().begin(),
 						   get_recordings().end(),
 						   string(""),
-						   bind( plus<string>(), _1,
-								 bind( plus<string>(),
-									   bind( &recording::get_graft_point, _2 ),
+						   boost::bind( std::plus<string>(), _1,
+								 boost::bind( std::plus<string>(),
+									   boost::bind( &recording::get_graft_point, _2 ),
 									   " "
 						  )));
 		graftPoints = format("{0} /dvd.vdr={1}/counters/standard") % graftPoints % plugin::get_config_path();

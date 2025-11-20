@@ -11,7 +11,7 @@
 #include "menuitems.h"
 #include "common.h"
 #include <algorithm>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/format.hpp>
 #include <vdr/menuitems.h>
 #include <vdr/videodir.h>
@@ -21,6 +21,7 @@ namespace vdr_burn
 {
 
 	using namespace std;
+	using namespace boost::placeholders;
 
 // --- cBurnParameters --------------------------------------------------------
 
@@ -254,8 +255,8 @@ bool cBurnParameters::ProcessArgs(int argc, char *argv[])
 
 	void plugin_setup_editor::store_setup()
 	{
-		for_each( m_setup.begin(), m_setup.end(), bind( &plugin_setup_editor::store_value, this, _1 ) );
-		for_each( m_defaults.begin(), m_defaults.end(), bind( &plugin_setup_editor::store_value, this, _1 ) );
+		for_each( m_setup.begin(), m_setup.end(), boost::bind( &plugin_setup_editor::store_value, this, _1 ) );
+		for_each( m_defaults.begin(), m_defaults.end(), boost::bind( &plugin_setup_editor::store_value, this, _1 ) );
 
 		global_setup() = m_setup;
 		job_defaults() = m_defaults;

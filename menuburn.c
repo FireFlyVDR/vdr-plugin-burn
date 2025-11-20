@@ -19,7 +19,7 @@
 #include <iterator>
 #include <sstream>
 #include <utility>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/format.hpp>
 #include <vdr/interface.h>
 #include <vdr/videodir.h>
@@ -33,6 +33,7 @@ namespace vdr_burn
 	using proctools::logger;
 	using proctools::process;
 	using boost::bind;
+	using namespace boost::placeholders;
 
 	namespace menu
 	{
@@ -107,7 +108,7 @@ namespace vdr_burn
 			Add( new menu::text_item( "" ) );
 
 			for_each(m_tracks.begin(), m_tracks.end(),
-					 bind( &track_editor::add_track, this, _1 ));
+					 boost::bind( &track_editor::add_track, this, _1 ));
 			SetCurrent(Get(current == -1 ? 2 : current));
 			set_help_keys();
 			Display();
