@@ -54,8 +54,8 @@ SOFILE = libvdr-$(PLUGIN).so
 
 ### Includes and Defines (add further entries here):
 
-INCLUDES += -I$(VDRDIR)/include -I. $(shell gdlib-config --cflags)
-LIBS     += $(shell gdlib-config --ldflags --libs) -lgd
+INCLUDES += -I$(VDRDIR)/include -I. $(shell pkg-config --cflags gdlib)
+LIBS     += $(shell pkg-config --libs gdlib)
 DEFINES  += -DPLUGIN_NAME='"$(PLUGIN)"' -DPLUGIN_NAME_I18N='"$(PLUGIN)"' -D_LARGEFILE_SOURCE
 
 ### The object files (add further files here):
