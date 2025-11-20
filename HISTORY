@@ -1,7 +1,15 @@
 VDR Plugin 'burn' Revision History
 ----------------------------------
 
-2016-03-xx: Version 0.3.0
+2025-11-20: Version 0.3.1
+- replace outdated gdlib-config with pkg-config (provided by seahawk1986)
+- resolve namespace conflicts between boost and the standard library (provided by seahawk1986)
+- replace deprecated auto_ptr
+- replace deprecated readdir_r()
+
+2022-02-11: moved repo to github
+
+2016-03-28: Version 0.3.0
 - removed compatibility code of VDR < 2.0 - burn now requires VDR 2.0.0 or higher
 - removed test directory
 - fixed display of pmtPid (thanks to lhanisch, bug #1285)

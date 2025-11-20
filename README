@@ -3,9 +3,10 @@ This is a plugin for the Video Disk Recorder (VDR).
 Originally Written by:       Sascha Volkenandt <sascha at akv-soft dot de>
 Currently developed by       Christoph Haubrich <christoph1.haubrich (AT) arcor.de>
 
-Project's homepage:          http://projects.vdr-developer.org/projects/show/plg-burn
+Project's homepage:          https://github.com/FireFlyVDR/vdr-plugin-burn
+                             formerly: http://projects.vdr-developer.org/projects/show/plg-burn
 
-Latest version available at: http://projects.vdr-developer.org/projects/list_files/plg-burn
+Latest version available at: https://github.com/FireFlyVDR/vdr-plugin-burn/releases
 
 See the file COPYING for license information.
 
@@ -51,7 +52,7 @@ Installation
 
 1. Untar the archive inside VDR's plugin-source folder
 
-   # tar xvfz -C PLUGINS/src vdr-burn-0.3.0.tgz
+   # tar xvfz -C PLUGINS/src vdr-plugin-burn-0.3.1.tgz
 
 2. Install the required development packages of boost and GD.
 

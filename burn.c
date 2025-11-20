@@ -38,7 +38,7 @@ namespace vdr_burn
 	using namespace std;
 	using proctools::format;
 
-	const char* plugin::VERSION        = "0.3.0";
+	const char* plugin::VERSION        = "0.3.1";
 	const char* plugin::DESCRIPTION    = trNOOP("Versatile convert-and-burn plugin");
 	const char* plugin::MAINMENUENTRY  = tr("Create DVDs");
 
