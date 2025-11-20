@@ -156,9 +156,8 @@ namespace vdr_burn
         }
 
         struct dirent* entry;
-        char entryBuffer[__builtin_offsetof(struct dirent, d_name) + NAME_MAX + 1];
-        int result;
-        while ((result = readdir_r(videoDir, (struct dirent*)entryBuffer, &entry)) == 0 && entry != 0) {
+	errno = 0;
+        while ((entry = readdir(videoDir)) != 0) {
             string fileName( entry->d_name );
             if ((fileName.length() != 8 ||
                     fileName.find_first_not_of( "0123456789" ) != 5 ||
@@ -183,8 +182,7 @@ namespace vdr_burn
             m_videoFileSizes[fileNo - 1] = statBuffer.st_size;
         }
 
-        if (result != 0) {
-            errno = result;
+        if (errno != 0) {
             logger::error(format( "couldn't browse {0} while trying to scan recording" ) % m_fileName);
             closedir(videoDir);
             throw user_exception( tr("Couldn't browse recording") );
