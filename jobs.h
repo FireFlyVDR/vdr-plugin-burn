@@ -200,7 +200,7 @@ namespace vdr_burn {
 		job_options m_options;
 		recording_list m_recordings;
 		path_pair m_paths;
-		std::auto_ptr<chain_vdr> m_process;
+		std::unique_ptr<chain_vdr> m_process;
 
 	public:
 		job();

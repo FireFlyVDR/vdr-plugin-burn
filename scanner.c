@@ -78,7 +78,7 @@ namespace vdr_burn
                 m_state( new inpoint( *this ) ) { }
         marks_scanner(const marks_scanner& right):
                 m_index( right.m_index ), m_totalSize( right.m_totalSize ), m_totalLength( right.m_totalLength ),
-                m_state( 0 ) { }
+                m_state( nullptr ) { }
 
         void operator()(const cMark& mark);
 
@@ -89,7 +89,7 @@ namespace vdr_burn
         recording_index& m_index;
         uint64_t m_totalSize;
         int m_totalLength;
-        auto_ptr<state> m_state;
+        unique_ptr<state> m_state;
     };
 
     marks_scanner::state* marks_scanner::inpoint::process(int index)

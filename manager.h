@@ -60,7 +60,7 @@ namespace vdr_burn
 		cMutex    m_mutex;
 		cCondVar  m_condition;
 
-		std::auto_ptr<job> m_pending;
+		std::unique_ptr<job> m_pending;
 		job*      m_active;
 		job_queue m_queued;
 		job_queue m_erroneous;
